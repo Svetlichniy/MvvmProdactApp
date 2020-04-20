@@ -11,6 +11,9 @@
             <TabItem Header="Prodacts">
                 <local:ProdactView/>
             </TabItem>
+            <TabItem Header="Property Elements">
+                <local:PropertyElementsView/>
+            </TabItem>
         </TabControl>
     </Grid>
 </Window>

@@ -1,4 +1,6 @@
-﻿namespace MvvmProdactApp.Models
+﻿using MvvmProdactApp.Models.ObjProppsClasses;
+
+namespace MvvmProdactApp.Models
 {
     public class ObjProperties
     {

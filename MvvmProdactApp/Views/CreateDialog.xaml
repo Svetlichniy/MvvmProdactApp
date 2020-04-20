@@ -1,0 +1,106 @@
+﻿<Window x:Class="MvvmProdactApp.Views.CreateDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MvvmProdactApp.ViewModels" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type={x:Type local:CreateDialogVM}}"
+        Title="CreateDialog" Height="350" Width="400">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="100"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+        </Grid.Resources>
+        <TextBlock Text="Type" Grid.Column="0" Grid.Row="0"/>
+        <ComboBox x:Name="type" 
+                  ItemsSource="{Binding Typies}"
+                  SelectedItem="{Binding SelectedType, Mode=TwoWay}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding TypeSelection}"
+                                           CommandParameter="{Binding ElementName=type, Path=SelectedItem}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ComboBox>
+
+        <TextBlock Text="Name" Grid.Column="0" Grid.Row="01"/>
+        <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"/>
+        <TextBlock 
+            Text="Designation" 
+            Grid.Column="0" Grid.Row="2"
+            Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox 
+            Text="{Binding Designation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2"
+            Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <TextBlock 
+            Text="Litera" 
+            Grid.Column="0" Grid.Row="3"
+            Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}"/>
+        <ComboBox 
+            ItemsSource="{Binding Literas}" 
+            SelectedItem="{Binding NewLitera, Mode=TwoWay}"
+            Grid.Column="1" 
+            Grid.ColumnSpan="2" Grid.Row="3"
+            Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBlock 
+            Text="ClassObj" 
+            Grid.Column="0" Grid.Row="4"
+            Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}"/>
+        <ComboBox 
+            ItemsSource="{Binding ProdactClasses}" 
+            SelectedItem="{Binding NewProdactClass, Mode=TwoWay}"
+            Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4"
+            Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <TextBlock 
+            Text="LifeCycleState" 
+            Grid.Column="0" Grid.Row="5"
+            Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}"/>
+        <ComboBox 
+            ItemsSource="{Binding LifeCycleStates}" 
+            SelectedItem="{Binding NewLifeCycleState, Mode=TwoWay}"
+            Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5"
+            Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <Button
+            Command="{Binding SetResult}" 
+            CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+            Grid.Column="2" Grid.Row="7">OK</Button>
+    </Grid>
+</Window>

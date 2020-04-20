@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using MvvmProdactApp.Views;
 
 namespace MvvmProdactApp.ViewModels
 {
@@ -19,6 +20,7 @@ namespace MvvmProdactApp.ViewModels
         {
             Items = new ObservableCollection<HierarchicalObject>();
             StoredObjs = new StoredObjects();
+            AppService.StaticStoredObjs = StoredObjs;
             //InitObjects();
             StartUp();
         }
@@ -28,19 +30,33 @@ namespace MvvmProdactApp.ViewModels
         {
             get
             {
-                return new ParamCommand(obj =>
+                return new ParamCommand(selectedCon =>
                 {
-                    var SelectedItem = obj as HierarchicalObject;
-                    if (SelectedItem.Discriminator.Equals("DataContainer"))
-                    {
-                        var dc = SelectedItem as DataContainer;
-                        dc.Prodacts.Add(new DataContainer() { Name = "EEEEE"+new Random().Next(1, 5467) });
-                        StoredObjs.Update(dc);
-                        StoredObjs.SaveChanges();
-                    }
+                    CreateObj(selectedCon);
                 });
             }
         }
+
+        private void CreateObj(object obj)
+        {
+            var SelectedItem = obj as HierarchicalObject;
+            if (SelectedItem.Discriminator.Equals("DataContainer"))
+            {
+                var SelectedContainer = SelectedItem as DataContainer;
+                var creatDialog = new CreateDialog();
+                var Vm = creatDialog.DataContext as CreateDialogVM;
+                if (creatDialog.ShowDialog() == true)
+                {
+                    var newItem = Vm.GetResultObject();
+                    if (newItem != null)
+                    {
+                        SelectedContainer.Prodacts.Add(newItem);
+                        SelectedContainer.Save();
+                    }
+                }
+            }
+        }
+
         public ICommand Delete
         {
             get
@@ -48,8 +64,7 @@ namespace MvvmProdactApp.ViewModels
                 return new ParamCommand(obj =>
                 {
                     var SelectedItem = obj as HierarchicalObject;
-                    StoredObjs.Remove(SelectedItem);
-                    StoredObjs.SaveChanges();
+                    SelectedItem.Remove();
                 });
             }
         }
@@ -60,7 +75,14 @@ namespace MvvmProdactApp.ViewModels
             {
                 return new ParamCommand(obj => 
                 {
-                    MessageBox.Show(obj.ToString()) ;
+                    var selectedItem = obj as HierarchicalObject;
+                    if (selectedItem.Discriminator.Equals("ProdactObject"))
+                    {
+                        AppService.PropertyVM.SelectedItem = obj as ProdactObject;
+                        AppService.PropertyVM.PropsVisible = Visibility.Visible;
+                    }
+                    else
+                        AppService.PropertyVM.PropsVisible = Visibility.Collapsed;
                 });
             }
         }

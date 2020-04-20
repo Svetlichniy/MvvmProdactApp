@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MvvmProdactApp.ViewModels
 {
-    class ProdactVM
+    public class ProdactVM
     {
     }
 }

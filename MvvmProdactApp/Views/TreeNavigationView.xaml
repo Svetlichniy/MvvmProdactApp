@@ -6,22 +6,27 @@
              xmlns:local="clr-namespace:MvvmProdactApp.Views"
              xmlns:VM="clr-namespace:MvvmProdactApp.ViewModels"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              x:Class="MvvmProdactApp.Views.TreeNavigationView"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type={x:Type VM:TreeNavigationVM}}"
              d:DesignHeight="450" d:DesignWidth="400">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="25"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal">
-            <Button Command="{Binding Create}" 
-                    CommandParameter="{Binding SelectedItem, ElementName=tr}" Content="Create"/>
-            <Button Command="{Binding Delete}" 
-                    CommandParameter="{Binding SelectedItem, ElementName=tr}" Content="Delete"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="55"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Vertical" Grid.Column="0">
+            <Button Margin="3" Command="{Binding Create}" 
+                    CommandParameter="{Binding SelectedItem, ElementName=tr}" >
+                <Image Source="pack://application:,,,/MvvmProdactApp;component/Resources/assembly.png"></Image>
+            </Button>
+            <Button Margin="3" Command="{Binding Delete}" 
+                    CommandParameter="{Binding SelectedItem, ElementName=tr}">
+                <Image Source="/Resources/delete.png" Stretch="Uniform"/>
+            </Button>
         </StackPanel>
-        <TreeView x:Name="tr" Grid.Row="1" ItemsSource ="{Binding Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="#FFF0F6FB" Margin="0,0,3,0">
+        <TreeView x:Name="tr" Grid.Column="1" ItemsSource ="{Binding Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="#FFF0F6FB" Margin="0,0,3,0">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectedItemChanged">
                     <i:InvokeCommandAction Command="{Binding GetItem}"
@@ -33,7 +38,7 @@
                 <HierarchicalDataTemplate ItemsSource="{Binding Prodacts, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="{Binding Image}" Height="15" Margin="2"/>
-                        <TextBlock x:Name="itemName" Text="{Binding Name}"/>
+                        <TextBlock x:Name="itemName" Text="{Binding NameUI}"/>
                     </StackPanel>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
