@@ -15,6 +15,5 @@ namespace MvvmProdactApp.Models.ObjProppsClasses
                 AppService.StaticStoredObjs.LifeCycleStates.Update(this);
             AppService.StaticStoredObjs.SaveChanges();
         }
-
     }
 }

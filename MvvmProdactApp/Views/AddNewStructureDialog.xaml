@@ -1,0 +1,81 @@
+﻿<Window x:Class="MvvmProdactApp.Views.AddNewStructureDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MvvmProdactApp.Views"
+        xmlns:vm="clr-namespace:MvvmProdactApp.ViewModels"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type={x:Type vm:AddNewStructureVM}}"
+        Title="AddNewStructureDialog" Height="400" Width="500">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="70"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+            <RowDefinition Height="45"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Search" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0"/>
+        <TextBox Margin="3"
+                 Grid.Row="0" 
+                 Grid.Column="1"/>
+        <ListBox
+            x:Name="list"
+            ItemsSource="{Binding AllProdacts, UpdateSourceTrigger=PropertyChanged}"
+            Grid.Row="1" 
+            Grid.Column="0" 
+            Grid.ColumnSpan="2" 
+            SelectionMode="Multiple"
+            BorderBrush="Black" BorderThickness="1">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Height="16" Source="{Binding Image}"/>
+                        <TextBlock Text="{Binding NameUI}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Margin="5" VerticalAlignment="Center" Grid.Column="2" Grid.Row="1" Orientation="Vertical">
+            <Button
+                Margin="2"
+                Command="{Binding AddSelectedItems}"
+                CommandParameter="{Binding ElementName=list, Path=SelectedItems}">-></Button>
+            <Button
+                Margin="2"
+                Command="{Binding RemoveFromResult}"
+                CommandParameter="{Binding ElementName=resultList, Path=SelectedItems}">-</Button>
+        </StackPanel>
+        <TextBlock Text="SelectedProdacts" Grid.Column="3" Grid.Row="0" Grid.ColumnSpan="2" 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+        <ListBox x:Name="resultList"
+                 Grid.Row="1"
+                 Grid.Column="3"
+                 Grid.ColumnSpan="2"
+                 BorderThickness="1" 
+                 BorderBrush="Black"
+                 SelectionMode="Multiple"
+                 ItemsSource="{Binding SelectedProdacts, UpdateSourceTrigger=PropertyChanged}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Height="16" Source="{Binding Image}"/>
+                        <TextBlock Text="{Binding NameUI}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button 
+            Grid.Column="4"
+            Grid.Row="2"
+            Command="{Binding SetResult}" 
+            CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}">OK</Button>
+    </Grid>
+</Window>

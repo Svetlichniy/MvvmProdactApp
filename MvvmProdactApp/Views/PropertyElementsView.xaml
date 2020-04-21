@@ -14,7 +14,9 @@
             <ColumnDefinition Width="200"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <ListBox x:Name="list" Grid.Column="0">
+        <ListBox x:Name="list" Grid.Column="0" 
+                 BorderThickness="1"
+                 BorderBrush="Black">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
                     <i:InvokeCommandAction Command="{Binding GetItem}"
@@ -33,14 +35,27 @@
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Vertical" Grid.Column="0">
                 <Button>S</Button>
-                <Button Command="{Binding Create}" 
-                        CommandParameter="{Binding ElementName=list, Path=SelectedIndex}">C</Button>
-                <Button>D</Button>
+                <Button
+                    Command="{Binding Create}" 
+                    CommandParameter="{Binding ElementName=list, Path=SelectedIndex}">C</Button>
+                <Button
+                    Command="{Binding Delete}"
+                    CommandParameter="{Binding ElementName=dgrid, Path=SelectedItem}">D</Button>
             </StackPanel>
             <DataGrid 
-                AutoGenerateColumns="True"
+                x:Name="dgrid"
+                AutoGenerateColumns="False"
                 ItemsSource="{Binding ObjectPropperties, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1">
-
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                    <DataGridTemplateColumn Header="Image">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Height="16" Source="{Binding Image}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
             </DataGrid>
         </Grid>
     </Grid>

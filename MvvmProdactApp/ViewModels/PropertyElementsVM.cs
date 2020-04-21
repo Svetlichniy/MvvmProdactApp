@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 
 namespace MvvmProdactApp.ViewModels
@@ -17,6 +18,31 @@ namespace MvvmProdactApp.ViewModels
         public PropertyElementsVM()
         {
             ObjectPropperties = new ObservableCollection<PropertyObj>();
+        }
+
+        public ICommand Delete
+        {
+            get
+            {
+                return new ParamCommand(item =>
+                {
+                    if (item != null)
+                    {
+                        try
+                        {
+                            var DeletedItem = item as PropertyObj;
+                            AppService.StaticStoredObjs.Remove(DeletedItem);
+                            AppService.StaticStoredObjs.SaveChanges();
+                            ObjectPropperties.Remove(DeletedItem);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Невозможно удалить. \nВозможно объект используется.", "Предупреждение",
+                            MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                    }
+                });
+            }
         }
 
 
@@ -69,6 +95,8 @@ namespace MvvmProdactApp.ViewModels
                         break;
                     }
             }
+
+            AppService.PropertyVM.UpdateProperties();
         }
 
         public ICommand GetItem

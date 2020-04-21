@@ -63,7 +63,10 @@
             Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Name}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding Image}" Height="16"/>
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
@@ -78,7 +81,10 @@
             Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Name}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding Image}" Height="16"/>
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
@@ -93,7 +99,10 @@
             Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Name}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding Image}" Height="16"/>
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>

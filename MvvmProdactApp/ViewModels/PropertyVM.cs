@@ -1,9 +1,14 @@
 ﻿using MvvmProdactApp.Models;
+using MvvmProdactApp.Models.ObjProppsClasses;
 using MvvmProdactApp.Services;
+using MvvmProdactApp.Views;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
 
 namespace MvvmProdactApp.ViewModels
 {
@@ -11,6 +16,13 @@ namespace MvvmProdactApp.ViewModels
     {
         private ProdactObject selectedItem;
         private Visibility propsVisible;
+
+        public ObservableCollection<string> Typies { get; set; }
+
+        public ObservableCollection<Litera> Literas { get; set; }
+        public ObservableCollection<ProdactClass> ProdactClasses { get; set; }
+        public ObservableCollection<LifeCycleState> LifeCycleStates { get; set; }
+
 
         public ProdactObject SelectedItem
         {
@@ -31,9 +43,67 @@ namespace MvvmProdactApp.ViewModels
             }
         }
 
+        public ICommand AddStructure
+        {
+            get { return new ParamCommand(obj => AddNewStructure()); }
+        }
+
+        private void AddNewStructure()
+        {
+            var AddStructureDialog = new AddNewStructureDialog();
+            var Vm = AddStructureDialog.DataContext as AddNewStructureVM;
+
+            if(AddStructureDialog.ShowDialog() == true)
+            {
+                var NewItems = Vm.SelectedProdacts.ToList();
+                foreach (var item in NewItems)
+                    SelectedItem.Structure.Add(new ObjStructure()
+                    {
+                        LinkToObj = new LinkToObject() { ProdactObj = item },
+                        Position = 0,
+                        Count = 0
+                    });
+
+                SelectedItem.Save();
+            }
+        }
+
+        public ICommand RemoveStructure
+        {
+            get { return new ParamCommand(obj => _RemoveStructure(obj)); }
+        }
+
+        private void _RemoveStructure(object obj)
+        {
+            var selectedItem = obj as ObjStructure;
+            SelectedItem.Structure.Remove(selectedItem);
+            SelectedItem.Save();
+
+            AppService.StaticStoredObjs.Remove(selectedItem);
+            AppService.StaticStoredObjs.Remove(selectedItem.LinkToObj);
+            AppService.StaticStoredObjs.SaveChanges();
+        }
+
+
         public PropertyVM()
         {
             AppService.PropertyVM = this;
+
+            Typies = new ObservableCollection<string>() { "DataContainer", "ProdactObject" };
+            UpdateProperties();
+
+        }
+
+        public void UpdateProperties()
+        {
+            Literas = new ObservableCollection<Litera>();
+            AppService.StaticStoredObjs.Literas.ToList().ForEach(e => Literas.Add(e));
+
+            ProdactClasses = new ObservableCollection<ProdactClass>();
+            AppService.StaticStoredObjs.ProdactClasses.ToList().ForEach(e => ProdactClasses.Add(e));
+
+            LifeCycleStates = new ObservableCollection<LifeCycleState>();
+            AppService.StaticStoredObjs.LifeCycleStates.ToList().ForEach(e => LifeCycleStates.Add(e));
         }
     }
 }

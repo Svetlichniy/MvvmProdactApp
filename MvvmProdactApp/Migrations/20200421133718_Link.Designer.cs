@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MvvmProdactApp.DataContext;
 
 namespace MvvmProdactApp.Migrations
 {
     [DbContext(typeof(StoredObjects))]
-    partial class StoredObjectsModelSnapshot : ModelSnapshot
+    [Migration("20200421133718_Link")]
+    partial class Link
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,6 +45,23 @@ namespace MvvmProdactApp.Migrations
                     b.ToTable("HierarchicalObjects");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("HierarchicalObject");
+                });
+
+            modelBuilder.Entity("MvvmProdactApp.Models.LinkToObject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ProdactObjId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProdactObjId");
+
+                    b.ToTable("LinkToObject");
                 });
 
             modelBuilder.Entity("MvvmProdactApp.Models.ObjProperties", b =>
@@ -99,6 +118,37 @@ namespace MvvmProdactApp.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("PropertyObj");
                 });
 
+            modelBuilder.Entity("MvvmProdactApp.Models.ObjStructure", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Annotation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LinkToObjId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LinkToObjId");
+
+                    b.HasIndex("ParentId");
+
+                    b.ToTable("ObjStructures");
+                });
+
             modelBuilder.Entity("MvvmProdactApp.Models.DataContainer", b =>
                 {
                     b.HasBaseType("MvvmProdactApp.Models.HierarchicalObject");
@@ -146,6 +196,13 @@ namespace MvvmProdactApp.Migrations
                         .HasForeignKey("DataContainerId");
                 });
 
+            modelBuilder.Entity("MvvmProdactApp.Models.LinkToObject", b =>
+                {
+                    b.HasOne("MvvmProdactApp.Models.ProdactObject", "ProdactObj")
+                        .WithMany()
+                        .HasForeignKey("ProdactObjId");
+                });
+
             modelBuilder.Entity("MvvmProdactApp.Models.ObjProperties", b =>
                 {
                     b.HasOne("MvvmProdactApp.Models.ObjProppsClasses.ProdactClass", "Class")
@@ -159,6 +216,17 @@ namespace MvvmProdactApp.Migrations
                     b.HasOne("MvvmProdactApp.Models.ObjProppsClasses.Litera", "Litera")
                         .WithMany()
                         .HasForeignKey("LiteraId");
+                });
+
+            modelBuilder.Entity("MvvmProdactApp.Models.ObjStructure", b =>
+                {
+                    b.HasOne("MvvmProdactApp.Models.LinkToObject", "LinkToObj")
+                        .WithMany()
+                        .HasForeignKey("LinkToObjId");
+
+                    b.HasOne("MvvmProdactApp.Models.ProdactObject", "Parent")
+                        .WithMany("Structure")
+                        .HasForeignKey("ParentId");
                 });
 
             modelBuilder.Entity("MvvmProdactApp.Models.ProdactObject", b =>

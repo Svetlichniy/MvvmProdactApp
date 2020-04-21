@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MvvmProdactApp.Views"
-             xmlns:VM="clr-namespace:MvvmProdactApp.ViewModels"
+             xmlns:VM="clr-namespace:MvvmProdactApp.ViewModels" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type={x:Type VM:PropertyVM}}"
              d:DesignHeight="450" d:DesignWidth="800">
@@ -12,29 +13,131 @@
         <TabControl TabStripPlacement="Bottom" 
                     Visibility="{Binding PropsVisible, UpdateSourceTrigger=PropertyChanged}">
             <TabItem Header="Properties">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
+                <Grid Margin="10" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100"/>
                         <ColumnDefinition/>
+                        <ColumnDefinition Width="100"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Name" Grid.Column="0" Grid.Row="0"/>
-                    <TextBox Grid.Column="1" Grid.Row="0" 
-                             Text="{Binding SelectedItem.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBlock Text="Designation" Grid.Column="0" Grid.Row="1"/>
-                    <TextBox Grid.Column="1" Grid.Row="1" 
-                             Text="{Binding SelectedItem.Props.Designation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </Grid.Resources>
+                    <TextBlock Text="Type" Grid.Column="0" Grid.Row="0"/>
+                    <ComboBox x:Name="type" 
+                          ItemsSource="{Binding Typies}"
+                          SelectedItem="{Binding SelectedType, Mode=TwoWay}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding TypeSelection}"
+                                           CommandParameter="{Binding ElementName=type, Path=SelectedItem}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+
+                    <TextBlock Text="Name" Grid.Column="0" Grid.Row="01"/>
+                    <TextBox Text="{Binding SelectedItem.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"/>
+                    <TextBlock 
+                            Text="Designation" 
+                            Grid.Column="0" Grid.Row="2"
+                            Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox 
+                            Text="{Binding SelectedItem.Props.Designation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2"
+                            Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock 
+                            Text="Litera" 
+                            Grid.Column="0" Grid.Row="3"
+                            Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ComboBox 
+                            ItemsSource="{Binding Literas}" 
+                            SelectedItem="{Binding SelectedItem.Props.Litera, Mode=TwoWay}"
+                            Grid.Column="1" 
+                            Grid.ColumnSpan="2" Grid.Row="3"
+                            Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding Image}" Height="16"/>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <TextBlock 
+                            Text="ClassObj" 
+                            Grid.Column="0" Grid.Row="4"
+                            Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ComboBox 
+                            ItemsSource="{Binding ProdactClasses}" 
+                            SelectedItem="{Binding SelectedItem.Props.Class, Mode=TwoWay}"
+                            Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4"
+                            Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding Image}" Height="16"/>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <TextBlock 
+                            Text="LifeCycleState" 
+                            Grid.Column="0" Grid.Row="5"
+                            Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ComboBox 
+                            ItemsSource="{Binding LifeCycleStates}" 
+                            SelectedItem="{Binding SelectedItem.Props.LCstate, Mode=TwoWay}"
+                            Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5"
+                            Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding Image}" Height="16"/>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </Grid>
             </TabItem>
             <TabItem Header="Structure">
-                <DataGrid>
-                    
-                </DataGrid>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="45"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Margin="2" Command="{Binding AddStructure}">Add</Button>
+                        <Button Margin="2" 
+                                Command="{Binding RemoveStructure}"
+                                CommandParameter="{Binding ElementName=structure, Path=SelectedItem}">Remove</Button>
+                    </StackPanel>
+                    <DataGrid x:Name="structure"
+                              ItemsSource="{Binding SelectedItem.Structure}" 
+                              AutoGenerateColumns="False" 
+                              CanUserAddRows="False" Grid.Row="1">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Position" Binding="{Binding Position}"/>
+                            <DataGridTextColumn Header="Prodact" Binding="{Binding LinkToObj.ProdactObj.NameUI}" IsReadOnly="True"/>
+                            <DataGridTextColumn Header="Count" Binding="{Binding Count}"/>
+                            <DataGridTextColumn Header="Annotation" Binding="{Binding Annotation}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>

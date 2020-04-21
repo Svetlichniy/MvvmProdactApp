@@ -12,8 +12,6 @@ namespace MvvmProdactApp.Models
     public class DataContainer : HierarchicalObject
     {
         [NotMapped]
-        public BitmapImage Image { get; set; }
-        [NotMapped]
         public override string NameUI { get { return Name; } }
         [NotMapped]
         public List<DataContainer> ChildCons { get { return GetChildCons(); } }

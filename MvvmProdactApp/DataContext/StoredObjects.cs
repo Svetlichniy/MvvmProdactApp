@@ -13,6 +13,7 @@ namespace MvvmProdactApp.DataContext
         public DbSet<HierarchicalObject> HierarchicalObjects { get; set; }
         public DbSet<DataContainer> DataContainers { get; set; }
         public DbSet<ProdactObject> ProdactObjects { get; set; }
+        public DbSet<ObjStructure> ObjStructures { get; set; }
         public DbSet<PropertyObj> _AbstractPropertyObjs { get; set; }
         public DbSet<Litera> Literas { get; set; }
         public DbSet<ProdactClass> ProdactClasses { get; set; }
@@ -24,7 +25,7 @@ namespace MvvmProdactApp.DataContext
         {
             
             //Database.EnsureDeleted();
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

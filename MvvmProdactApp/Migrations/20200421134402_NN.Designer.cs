@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MvvmProdactApp.DataContext;
 
 namespace MvvmProdactApp.Migrations
 {
     [DbContext(typeof(StoredObjects))]
-    partial class StoredObjectsModelSnapshot : ModelSnapshot
+    [Migration("20200421134402_NN")]
+    partial class NN
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,6 +101,32 @@ namespace MvvmProdactApp.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("PropertyObj");
                 });
 
+            modelBuilder.Entity("MvvmProdactApp.Models.ObjStructure", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Annotation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProdactObjectId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProdactObjectId");
+
+                    b.ToTable("ObjStructures");
+                });
+
             modelBuilder.Entity("MvvmProdactApp.Models.DataContainer", b =>
                 {
                     b.HasBaseType("MvvmProdactApp.Models.HierarchicalObject");
@@ -159,6 +187,13 @@ namespace MvvmProdactApp.Migrations
                     b.HasOne("MvvmProdactApp.Models.ObjProppsClasses.Litera", "Litera")
                         .WithMany()
                         .HasForeignKey("LiteraId");
+                });
+
+            modelBuilder.Entity("MvvmProdactApp.Models.ObjStructure", b =>
+                {
+                    b.HasOne("MvvmProdactApp.Models.ProdactObject", null)
+                        .WithMany("Structure")
+                        .HasForeignKey("ProdactObjectId");
                 });
 
             modelBuilder.Entity("MvvmProdactApp.Models.ProdactObject", b =>

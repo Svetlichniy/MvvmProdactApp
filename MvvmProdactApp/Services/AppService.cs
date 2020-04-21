@@ -40,9 +40,9 @@ namespace MvvmProdactApp.Services
             if (img == null)
                 return null;
 
-
+            
             byte[] data;
-            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+            PngBitmapEncoder encoder = new PngBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(img));
             using (MemoryStream ms = new MemoryStream())
             {

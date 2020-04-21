@@ -63,6 +63,16 @@ namespace MvvmProdactApp {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Byte[].
         /// </summary>
+        public static byte[] architecture_and_city {
+            get {
+                object obj = ResourceManager.GetObject("architecture_and_city", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
         public static byte[] assembly {
             get {
                 object obj = ResourceManager.GetObject("assembly", resourceCulture);
@@ -103,9 +113,59 @@ namespace MvvmProdactApp {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Byte[].
         /// </summary>
+        public static byte[] document {
+            get {
+                object obj = ResourceManager.GetObject("document", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
         public static byte[] folder {
             get {
                 object obj = ResourceManager.GetObject("folder", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        public static byte[] folder_2_ {
+            get {
+                object obj = ResourceManager.GetObject("folder_2_", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        public static byte[] gear_assembly {
+            get {
+                object obj = ResourceManager.GetObject("gear_assembly", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        public static byte[] inventory {
+            get {
+                object obj = ResourceManager.GetObject("inventory", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        public static byte[] mover_truck {
+            get {
+                object obj = ResourceManager.GetObject("mover_truck", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -133,9 +193,49 @@ namespace MvvmProdactApp {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Byte[].
         /// </summary>
+        public static byte[] paper {
+            get {
+                object obj = ResourceManager.GetObject("paper", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
         public static byte[] part {
             get {
                 object obj = ResourceManager.GetObject("part", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        public static byte[] save {
+            get {
+                object obj = ResourceManager.GetObject("save", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        public static byte[] system {
+            get {
+                object obj = ResourceManager.GetObject("system", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        public static byte[] time {
+            get {
+                object obj = ResourceManager.GetObject("time", resourceCulture);
                 return ((byte[])(obj));
             }
         }
