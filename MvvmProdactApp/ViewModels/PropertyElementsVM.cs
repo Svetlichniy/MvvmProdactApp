@@ -34,6 +34,16 @@ namespace MvvmProdactApp.ViewModels
                             AppService.StaticStoredObjs.Remove(DeletedItem);
                             AppService.StaticStoredObjs.SaveChanges();
                             ObjectPropperties.Remove(DeletedItem);
+
+                            if (DeletedItem.GetType().Equals(typeof(ECNsection)))
+                                AppService.PropertyVM.ECNsections.Remove(DeletedItem as ECNsection);
+                            if (DeletedItem.GetType().Equals(typeof(ProdactClass)))
+                                AppService.PropertyVM.ProdactClasses.Remove(DeletedItem as ProdactClass);
+                            if (DeletedItem.GetType().Equals(typeof(Litera)))
+                                AppService.PropertyVM.Literas.Remove(DeletedItem as Litera);
+                            if (DeletedItem.GetType().Equals(typeof(LifeCycleState)))
+                                AppService.PropertyVM.LifeCycleStates.Remove(DeletedItem as LifeCycleState);
+
                         }
                         catch
                         {
@@ -71,6 +81,7 @@ namespace MvvmProdactApp.ViewModels
                             var newLitera = new Litera() { Name = Vm.Name, dbImage = AppService.ConverBitmapImageToByteArray(Vm.PropImage) };
                             newLitera.Save();
                             ObjectPropperties.Add(newLitera);
+                            AppService.PropertyVM.Literas.Add(newLitera);
                         }
                         break;
                     }
@@ -81,6 +92,7 @@ namespace MvvmProdactApp.ViewModels
                             var newClass = new ProdactClass() { Name = Vm.Name, dbImage = AppService.ConverBitmapImageToByteArray(Vm.PropImage) };
                             newClass.Save();
                             ObjectPropperties.Add(newClass);
+                            AppService.PropertyVM.ProdactClasses.Add(newClass);
                         }
                         break;
                     }
@@ -91,12 +103,22 @@ namespace MvvmProdactApp.ViewModels
                             var newLC = new LifeCycleState() { Name = Vm.Name, dbImage = AppService.ConverBitmapImageToByteArray(Vm.PropImage) };
                             newLC.Save();
                             ObjectPropperties.Add(newLC);
+                            AppService.PropertyVM.LifeCycleStates.Add(newLC);
+                        }
+                        break;
+                    }
+                case 3:
+                    {
+                        if (creatDialog.ShowDialog() == true)
+                        {
+                            var newSection = new ECNsection() { Name = Vm.Name, dbImage = AppService.ConverBitmapImageToByteArray(Vm.PropImage) };
+                            newSection.Save();
+                            ObjectPropperties.Add(newSection);
+                            AppService.PropertyVM.ECNsections.Add(newSection);
                         }
                         break;
                     }
             }
-
-            AppService.PropertyVM.UpdateProperties();
         }
 
         public ICommand GetItem
@@ -129,6 +151,11 @@ namespace MvvmProdactApp.ViewModels
                 case 2:
                     {
                         AppService.StaticStoredObjs.LifeCycleStates.ToList().ForEach(e => ObjectPropperties.Add(e));
+                        break;
+                    }
+                case 3:
+                    {
+                        AppService.StaticStoredObjs.ECNsections.ToList().ForEach(e => ObjectPropperties.Add(e));
                         break;
                     }
             }

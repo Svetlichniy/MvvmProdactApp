@@ -21,6 +21,7 @@ namespace MvvmProdactApp.ViewModels
 
         public ObservableCollection<Litera> Literas { get; set; }
         public ObservableCollection<ProdactClass> ProdactClasses { get; set; }
+        public ObservableCollection<ECNsection> ECNsections { get; set; }
         public ObservableCollection<LifeCycleState> LifeCycleStates { get; set; }
 
 
@@ -41,6 +42,14 @@ namespace MvvmProdactApp.ViewModels
                 propsVisible = value;
                 RaisePropertyChangedEvent("PropsVisible");
             }
+        }
+
+        public ICommand Save
+        {
+            get { return new ParamCommand(obj =>
+            {
+                SelectedItem.Save();
+            }); }
         }
 
         public ICommand AddStructure
@@ -104,6 +113,9 @@ namespace MvvmProdactApp.ViewModels
 
             LifeCycleStates = new ObservableCollection<LifeCycleState>();
             AppService.StaticStoredObjs.LifeCycleStates.ToList().ForEach(e => LifeCycleStates.Add(e));
+
+            ECNsections = new ObservableCollection<ECNsection>();
+            AppService.StaticStoredObjs.ECNsections.ToList().ForEach(e => ECNsections.Add(e));
         }
     }
 }

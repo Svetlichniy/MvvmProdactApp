@@ -18,6 +18,7 @@ namespace MvvmProdactApp.DataContext
         public DbSet<Litera> Literas { get; set; }
         public DbSet<ProdactClass> ProdactClasses { get; set; }
         public DbSet<LifeCycleState> LifeCycleStates { get; set; }
+        public DbSet<ECNsection> ECNsections { get; set; }
         public DbSet<ObjProperties> ObjProperties { get; set; }
 
 

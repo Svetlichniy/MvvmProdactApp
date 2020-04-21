@@ -8,6 +8,7 @@ namespace MvvmProdactApp.Models
         public string Designation { get; set; }
         public virtual Litera Litera { get; set; }
         public virtual ProdactClass Class { get; set; }
+        public virtual ECNsection Section { get; set; }
         public virtual LifeCycleState LCstate { get; set; }
     }
 }

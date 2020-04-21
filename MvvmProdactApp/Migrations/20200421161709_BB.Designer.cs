@@ -10,8 +10,8 @@ using MvvmProdactApp.DataContext;
 namespace MvvmProdactApp.Migrations
 {
     [DbContext(typeof(StoredObjects))]
-    [Migration("20200421134756_DelAllCrap")]
-    partial class DelAllCrap
+    [Migration("20200421161709_BB")]
+    partial class BB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,6 +47,23 @@ namespace MvvmProdactApp.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("HierarchicalObject");
                 });
 
+            modelBuilder.Entity("MvvmProdactApp.Models.LinkToObject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ProdactObjId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProdactObjId");
+
+                    b.ToTable("LinkToObject");
+                });
+
             modelBuilder.Entity("MvvmProdactApp.Models.ObjProperties", b =>
                 {
                     b.Property<int>("Id")
@@ -60,6 +77,9 @@ namespace MvvmProdactApp.Migrations
                     b.Property<string>("Designation")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ECNsectionId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("LCstateId")
                         .HasColumnType("int");
 
@@ -69,6 +89,8 @@ namespace MvvmProdactApp.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ClassId");
+
+                    b.HasIndex("ECNsectionId");
 
                     b.HasIndex("LCstateId");
 
@@ -101,6 +123,37 @@ namespace MvvmProdactApp.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("PropertyObj");
                 });
 
+            modelBuilder.Entity("MvvmProdactApp.Models.ObjStructure", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Annotation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LinkToObjId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProdactObjectId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LinkToObjId");
+
+                    b.HasIndex("ProdactObjectId");
+
+                    b.ToTable("ObjStructures");
+                });
+
             modelBuilder.Entity("MvvmProdactApp.Models.DataContainer", b =>
                 {
                     b.HasBaseType("MvvmProdactApp.Models.HierarchicalObject");
@@ -118,6 +171,13 @@ namespace MvvmProdactApp.Migrations
                     b.HasIndex("PropsId");
 
                     b.HasDiscriminator().HasValue("ProdactObject");
+                });
+
+            modelBuilder.Entity("MvvmProdactApp.Models.ObjProppsClasses.ECNsection", b =>
+                {
+                    b.HasBaseType("MvvmProdactApp.Models.ObjProppsClasses.PropertyObj");
+
+                    b.HasDiscriminator().HasValue("ECNsection");
                 });
 
             modelBuilder.Entity("MvvmProdactApp.Models.ObjProppsClasses.LifeCycleState", b =>
@@ -148,11 +208,22 @@ namespace MvvmProdactApp.Migrations
                         .HasForeignKey("DataContainerId");
                 });
 
+            modelBuilder.Entity("MvvmProdactApp.Models.LinkToObject", b =>
+                {
+                    b.HasOne("MvvmProdactApp.Models.ProdactObject", "ProdactObj")
+                        .WithMany()
+                        .HasForeignKey("ProdactObjId");
+                });
+
             modelBuilder.Entity("MvvmProdactApp.Models.ObjProperties", b =>
                 {
                     b.HasOne("MvvmProdactApp.Models.ObjProppsClasses.ProdactClass", "Class")
                         .WithMany()
                         .HasForeignKey("ClassId");
+
+                    b.HasOne("MvvmProdactApp.Models.ObjProppsClasses.ECNsection", "ECNsection")
+                        .WithMany()
+                        .HasForeignKey("ECNsectionId");
 
                     b.HasOne("MvvmProdactApp.Models.ObjProppsClasses.LifeCycleState", "LCstate")
                         .WithMany()
@@ -161,6 +232,17 @@ namespace MvvmProdactApp.Migrations
                     b.HasOne("MvvmProdactApp.Models.ObjProppsClasses.Litera", "Litera")
                         .WithMany()
                         .HasForeignKey("LiteraId");
+                });
+
+            modelBuilder.Entity("MvvmProdactApp.Models.ObjStructure", b =>
+                {
+                    b.HasOne("MvvmProdactApp.Models.LinkToObject", "LinkToObj")
+                        .WithMany()
+                        .HasForeignKey("LinkToObjId");
+
+                    b.HasOne("MvvmProdactApp.Models.ProdactObject", null)
+                        .WithMany("Structure")
+                        .HasForeignKey("ProdactObjectId");
                 });
 
             modelBuilder.Entity("MvvmProdactApp.Models.ProdactObject", b =>

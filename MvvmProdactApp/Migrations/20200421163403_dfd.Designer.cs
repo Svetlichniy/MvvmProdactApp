@@ -10,8 +10,8 @@ using MvvmProdactApp.DataContext;
 namespace MvvmProdactApp.Migrations
 {
     [DbContext(typeof(StoredObjects))]
-    [Migration("20200421134402_NN")]
-    partial class NN
+    [Migration("20200421163403_dfd")]
+    partial class dfd
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,6 +47,23 @@ namespace MvvmProdactApp.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("HierarchicalObject");
                 });
 
+            modelBuilder.Entity("MvvmProdactApp.Models.LinkToObject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ProdactObjId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProdactObjId");
+
+                    b.ToTable("LinkToObject");
+                });
+
             modelBuilder.Entity("MvvmProdactApp.Models.ObjProperties", b =>
                 {
                     b.Property<int>("Id")
@@ -66,6 +83,9 @@ namespace MvvmProdactApp.Migrations
                     b.Property<int?>("LiteraId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("SectionId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ClassId");
@@ -73,6 +93,8 @@ namespace MvvmProdactApp.Migrations
                     b.HasIndex("LCstateId");
 
                     b.HasIndex("LiteraId");
+
+                    b.HasIndex("SectionId");
 
                     b.ToTable("ObjProperties");
                 });
@@ -114,6 +136,9 @@ namespace MvvmProdactApp.Migrations
                     b.Property<int>("Count")
                         .HasColumnType("int");
 
+                    b.Property<int?>("LinkToObjId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Position")
                         .HasColumnType("int");
 
@@ -121,6 +146,8 @@ namespace MvvmProdactApp.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LinkToObjId");
 
                     b.HasIndex("ProdactObjectId");
 
@@ -144,6 +171,13 @@ namespace MvvmProdactApp.Migrations
                     b.HasIndex("PropsId");
 
                     b.HasDiscriminator().HasValue("ProdactObject");
+                });
+
+            modelBuilder.Entity("MvvmProdactApp.Models.ObjProppsClasses.ECNsection", b =>
+                {
+                    b.HasBaseType("MvvmProdactApp.Models.ObjProppsClasses.PropertyObj");
+
+                    b.HasDiscriminator().HasValue("ECNsection");
                 });
 
             modelBuilder.Entity("MvvmProdactApp.Models.ObjProppsClasses.LifeCycleState", b =>
@@ -174,6 +208,13 @@ namespace MvvmProdactApp.Migrations
                         .HasForeignKey("DataContainerId");
                 });
 
+            modelBuilder.Entity("MvvmProdactApp.Models.LinkToObject", b =>
+                {
+                    b.HasOne("MvvmProdactApp.Models.ProdactObject", "ProdactObj")
+                        .WithMany()
+                        .HasForeignKey("ProdactObjId");
+                });
+
             modelBuilder.Entity("MvvmProdactApp.Models.ObjProperties", b =>
                 {
                     b.HasOne("MvvmProdactApp.Models.ObjProppsClasses.ProdactClass", "Class")
@@ -187,10 +228,18 @@ namespace MvvmProdactApp.Migrations
                     b.HasOne("MvvmProdactApp.Models.ObjProppsClasses.Litera", "Litera")
                         .WithMany()
                         .HasForeignKey("LiteraId");
+
+                    b.HasOne("MvvmProdactApp.Models.ObjProppsClasses.ECNsection", "Section")
+                        .WithMany()
+                        .HasForeignKey("SectionId");
                 });
 
             modelBuilder.Entity("MvvmProdactApp.Models.ObjStructure", b =>
                 {
+                    b.HasOne("MvvmProdactApp.Models.LinkToObject", "LinkToObj")
+                        .WithMany()
+                        .HasForeignKey("LinkToObjId");
+
                     b.HasOne("MvvmProdactApp.Models.ProdactObject", null)
                         .WithMany("Structure")
                         .HasForeignKey("ProdactObjectId");

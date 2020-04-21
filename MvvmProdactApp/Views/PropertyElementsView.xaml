@@ -27,8 +27,9 @@
             <ListBoxItem>Литеры</ListBoxItem>
             <ListBoxItem>Классы</ListBoxItem>
             <ListBoxItem>Статусы</ListBoxItem>
+            <ListBoxItem>Разделы спецификации</ListBoxItem>
         </ListBox>
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" Margin="10,0,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition/>

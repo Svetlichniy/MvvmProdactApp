@@ -20,12 +20,14 @@ namespace MvvmProdactApp.ViewModels
         private Litera newLitera;
         private ProdactClass newProdactClass;
         private LifeCycleState newLifeCycleState;
+        private ECNsection newSection;
 
         public ObservableCollection<string> Typies { get; set; }
 
         public ObservableCollection<Litera> Literas { get; set; }
         public ObservableCollection<ProdactClass> ProdactClasses { get; set; }
         public ObservableCollection<LifeCycleState> LifeCycleStates { get; set; }
+        public ObservableCollection<ECNsection> ECNsections { get; set; }
         public CreateDialogVM()
         {
             Typies = new ObservableCollection<string>() { "DataContainer", "ProdactObject" };
@@ -35,6 +37,9 @@ namespace MvvmProdactApp.ViewModels
 
             ProdactClasses = new ObservableCollection<ProdactClass>();
             AppService.StaticStoredObjs.ProdactClasses.ToList().ForEach(e => ProdactClasses.Add(e));
+
+            ECNsections = new ObservableCollection<ECNsection>();
+            AppService.StaticStoredObjs.ECNsections.ToList().ForEach(e => ECNsections.Add(e));
 
             LifeCycleStates = new ObservableCollection<LifeCycleState>();
             AppService.StaticStoredObjs.LifeCycleStates.ToList().ForEach(e => LifeCycleStates.Add(e));
@@ -93,6 +98,15 @@ namespace MvvmProdactApp.ViewModels
             {
                 newLifeCycleState = value;
                 RaisePropertyChangedEvent("NewLifeCycleState");
+            }
+        }
+        public ECNsection NewSection
+        {
+            get { return newSection; }
+            set
+            {
+                newSection = value;
+                RaisePropertyChangedEvent("NewSection");
             }
         }
 
@@ -156,6 +170,7 @@ namespace MvvmProdactApp.ViewModels
                         Litera = NewLitera,
                         Class = NewProdactClass,
                         LCstate = NewLifeCycleState,
+                        Section = NewSection
                     }
                 };
             }

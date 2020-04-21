@@ -34,18 +34,7 @@
                             <Setter Property="VerticalAlignment" Value="Center"/>
                         </Style>
                     </Grid.Resources>
-                    <TextBlock Text="Type" Grid.Column="0" Grid.Row="0"/>
-                    <ComboBox x:Name="type" 
-                          ItemsSource="{Binding Typies}"
-                          SelectedItem="{Binding SelectedType, Mode=TwoWay}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="SelectionChanged">
-                                <i:InvokeCommandAction Command="{Binding TypeSelection}"
-                                           CommandParameter="{Binding ElementName=type, Path=SelectedItem}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </ComboBox>
-
+                    <Button Command="{Binding Save}" Grid.Row="0" Grid.Column="0">Save</Button>
                     <TextBlock Text="Name" Grid.Column="0" Grid.Row="01"/>
                     <TextBox Text="{Binding SelectedItem.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"/>
                     <TextBlock 
@@ -62,7 +51,7 @@
                             Grid.Column="0" Grid.Row="3"
                             Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}"/>
                     <ComboBox 
-                            ItemsSource="{Binding Literas}" 
+                            ItemsSource="{Binding Literas, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                             SelectedItem="{Binding SelectedItem.Props.Litera, Mode=TwoWay}"
                             Grid.Column="1" 
                             Grid.ColumnSpan="2" Grid.Row="3"
@@ -81,7 +70,7 @@
                             Grid.Column="0" Grid.Row="4"
                             Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}"/>
                     <ComboBox 
-                            ItemsSource="{Binding ProdactClasses}" 
+                            ItemsSource="{Binding ProdactClasses, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                             SelectedItem="{Binding SelectedItem.Props.Class, Mode=TwoWay}"
                             Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4"
                             Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}">
@@ -95,13 +84,31 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <TextBlock 
-                            Text="LifeCycleState" 
+                            Text="ECNsection" 
                             Grid.Column="0" Grid.Row="5"
                             Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}"/>
                     <ComboBox 
-                            ItemsSource="{Binding LifeCycleStates}" 
-                            SelectedItem="{Binding SelectedItem.Props.LCstate, Mode=TwoWay}"
+                            ItemsSource="{Binding ECNsections, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                            SelectedItem="{Binding SelectedItem.Props.Section, Mode=TwoWay}"
                             Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5"
+                            Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding Image}" Height="16"/>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <TextBlock 
+                            Text="LifeCycleState" 
+                            Grid.Column="0" Grid.Row="6"
+                            Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ComboBox 
+                            ItemsSource="{Binding LifeCycleStates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                            SelectedItem="{Binding SelectedItem.Props.LCstate, Mode=TwoWay}"
+                            Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6"
                             Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
@@ -132,7 +139,21 @@
                               CanUserAddRows="False" Grid.Row="1">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Position" Binding="{Binding Position}"/>
-                            <DataGridTextColumn Header="Prodact" Binding="{Binding LinkToObj.ProdactObj.NameUI}" IsReadOnly="True"/>
+                            <DataGridTemplateColumn Header="Prodact" IsReadOnly="True">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <Hyperlink>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Height="16" Source="{Binding LinkToObj.ProdactObj.Image}"/>
+                                                    <Image Height="16" Source="{Binding LinkToObj.ProdactObj.Props.Section.Image}"/>
+                                                    <TextBlock Text="{Binding LinkToObj.ProdactObj.NameUI}"/>
+                                                </StackPanel>
+                                            </Hyperlink>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                             <DataGridTextColumn Header="Count" Binding="{Binding Count}"/>
                             <DataGridTextColumn Header="Annotation" Binding="{Binding Annotation}"/>
                         </DataGrid.Columns>

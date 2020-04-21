@@ -19,7 +19,7 @@
         <StackPanel Orientation="Vertical" Grid.Column="0">
             <Button Margin="3" Command="{Binding Create}" 
                     CommandParameter="{Binding SelectedItem, ElementName=tr}" >
-                <Image Source="pack://application:,,,/MvvmProdactApp;component/Resources/assembly.png"></Image>
+                <Image Source="/Resources/inventory.png"></Image>
             </Button>
             <Button Margin="3" Command="{Binding Delete}" 
                     CommandParameter="{Binding SelectedItem, ElementName=tr}">
@@ -37,7 +37,8 @@
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Prodacts, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="{Binding Image}" Height="15" Margin="2"/>
+                        <Image Source="{Binding Image}" Height="16" Margin="2"/>
+                        <Image Source="{Binding ECNImage}" Height="16" Margin="2"/>
                         <TextBlock x:Name="itemName" Text="{Binding NameUI}"/>
                     </StackPanel>
                 </HierarchicalDataTemplate>

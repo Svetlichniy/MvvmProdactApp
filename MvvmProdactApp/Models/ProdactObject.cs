@@ -12,6 +12,8 @@ namespace MvvmProdactApp.Models
     {
         [NotMapped]
         public override string NameUI { get { return Props.Designation + " " + Name; } }
+        [NotMapped]
+        public override BitmapImage ECNImage { get => Props.Section.Image; }
 
         public virtual ObjProperties Props { get; set; }
         public virtual ObservableCollection<ObjStructure> Structure { get; set; }

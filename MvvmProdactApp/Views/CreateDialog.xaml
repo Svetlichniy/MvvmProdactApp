@@ -22,6 +22,7 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.Resources>
             <Style TargetType="TextBlock">
@@ -89,14 +90,14 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
         <TextBlock 
-            Text="LifeCycleState" 
-            Grid.Column="0" Grid.Row="5"
-            Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}"/>
+                Text="ECNsection" 
+                Grid.Column="0" Grid.Row="5"
+                Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}"/>
         <ComboBox 
-            ItemsSource="{Binding LifeCycleStates}" 
-            SelectedItem="{Binding NewLifeCycleState, Mode=TwoWay}"
-            Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5"
-            Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}">
+                ItemsSource="{Binding ECNsections, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                SelectedItem="{Binding NewSection, Mode=TwoWay}"
+                Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5"
+                Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -106,10 +107,27 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-
+        <TextBlock 
+                Text="LifeCycleState" 
+                Grid.Column="0" Grid.Row="6"
+                Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}"/>
+        <ComboBox 
+                ItemsSource="{Binding LifeCycleStates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                SelectedItem="{Binding NewLifeCycleState, Mode=TwoWay}"
+                Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6"
+                Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding Image}" Height="16"/>
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
         <Button
             Command="{Binding SetResult}" 
             CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-            Grid.Column="2" Grid.Row="7">OK</Button>
+            Grid.Column="2" Grid.Row="8">OK</Button>
     </Grid>
 </Window>

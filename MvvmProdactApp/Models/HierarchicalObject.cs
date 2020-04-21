@@ -15,6 +15,8 @@ namespace MvvmProdactApp.Models
         public virtual string NameUI { get; }
         [NotMapped]
         public BitmapImage Image { get; set; }
+        [NotMapped]
+        public virtual BitmapImage ECNImage { get; set; }
 
         public string Discriminator { get; set; }
 

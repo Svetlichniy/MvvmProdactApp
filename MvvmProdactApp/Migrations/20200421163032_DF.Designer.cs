@@ -10,8 +10,8 @@ using MvvmProdactApp.DataContext;
 namespace MvvmProdactApp.Migrations
 {
     [DbContext(typeof(StoredObjects))]
-    [Migration("20200421133718_Link")]
-    partial class Link
+    [Migration("20200421163032_DF")]
+    partial class DF
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -83,6 +83,9 @@ namespace MvvmProdactApp.Migrations
                     b.Property<int?>("LiteraId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("SectionId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ClassId");
@@ -90,6 +93,8 @@ namespace MvvmProdactApp.Migrations
                     b.HasIndex("LCstateId");
 
                     b.HasIndex("LiteraId");
+
+                    b.HasIndex("SectionId");
 
                     b.ToTable("ObjProperties");
                 });
@@ -134,17 +139,17 @@ namespace MvvmProdactApp.Migrations
                     b.Property<int?>("LinkToObjId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ParentId")
+                    b.Property<int>("Position")
                         .HasColumnType("int");
 
-                    b.Property<int>("Position")
+                    b.Property<int?>("ProdactObjectId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("LinkToObjId");
 
-                    b.HasIndex("ParentId");
+                    b.HasIndex("ProdactObjectId");
 
                     b.ToTable("ObjStructures");
                 });
@@ -166,6 +171,13 @@ namespace MvvmProdactApp.Migrations
                     b.HasIndex("PropsId");
 
                     b.HasDiscriminator().HasValue("ProdactObject");
+                });
+
+            modelBuilder.Entity("MvvmProdactApp.Models.ObjProppsClasses.ECNsection", b =>
+                {
+                    b.HasBaseType("MvvmProdactApp.Models.ObjProppsClasses.PropertyObj");
+
+                    b.HasDiscriminator().HasValue("ECNsection");
                 });
 
             modelBuilder.Entity("MvvmProdactApp.Models.ObjProppsClasses.LifeCycleState", b =>
@@ -216,6 +228,10 @@ namespace MvvmProdactApp.Migrations
                     b.HasOne("MvvmProdactApp.Models.ObjProppsClasses.Litera", "Litera")
                         .WithMany()
                         .HasForeignKey("LiteraId");
+
+                    b.HasOne("MvvmProdactApp.Models.ObjProppsClasses.ECNsection", "Section")
+                        .WithMany()
+                        .HasForeignKey("SectionId");
                 });
 
             modelBuilder.Entity("MvvmProdactApp.Models.ObjStructure", b =>
@@ -224,9 +240,9 @@ namespace MvvmProdactApp.Migrations
                         .WithMany()
                         .HasForeignKey("LinkToObjId");
 
-                    b.HasOne("MvvmProdactApp.Models.ProdactObject", "Parent")
+                    b.HasOne("MvvmProdactApp.Models.ProdactObject", null)
                         .WithMany("Structure")
-                        .HasForeignKey("ParentId");
+                        .HasForeignKey("ProdactObjectId");
                 });
 
             modelBuilder.Entity("MvvmProdactApp.Models.ProdactObject", b =>
