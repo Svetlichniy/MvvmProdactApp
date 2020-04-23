@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MvvmProdactApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -21,6 +22,7 @@ namespace MvvmProdactApp.Views
         public ProdactView()
         {
             InitializeComponent();
+            DataContext = new ProdactVM();
         }
     }
 }

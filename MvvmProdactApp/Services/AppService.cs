@@ -13,6 +13,7 @@ namespace MvvmProdactApp.Services
     {
         public static StoredObjects StaticStoredObjs { get; set; }
         public static PropertyVM PropertyVM { get; set; }
+        public static DataContainerVM DataContainerVM { get; set; }
         public static TreeNavigationVM TreeNavigationVM { get; set; }
         public static ProdactVM ProdactVM { get; set; }
 

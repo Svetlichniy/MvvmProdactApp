@@ -12,7 +12,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <TabControl TabStripPlacement="Bottom" 
-                    Visibility="{Binding PropsVisible, UpdateSourceTrigger=PropertyChanged}">
+                    Visibility="{Binding PropsVisible, UpdateSourceTrigger=PropertyChanged}" Background="#FFFFFBEC">
             <TabItem Header="Properties">
                 <Grid Margin="10">
                     <Grid.ColumnDefinitions>

@@ -78,11 +78,14 @@ namespace MvvmProdactApp.ViewModels
                     var selectedItem = obj as HierarchicalObject;
                     if (selectedItem.Discriminator.Equals("ProdactObject"))
                     {
+                        AppService.ProdactVM.SwitchView = 1;
                         AppService.PropertyVM.SelectedItem = obj as ProdactObject;
-                        AppService.PropertyVM.PropsVisible = Visibility.Visible;
                     }
                     else
-                        AppService.PropertyVM.PropsVisible = Visibility.Collapsed;
+                    {
+                        AppService.ProdactVM.SwitchView = 0;
+                        AppService.DataContainerVM.SelectedContainer = selectedItem as DataContainer;
+                    }
                 });
             }
         }

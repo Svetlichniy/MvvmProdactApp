@@ -4,14 +4,37 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MvvmProdactApp.Views"
+             xmlns:vm="clr-namespace:MvvmProdactApp.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate x:Key="ProdactProps" DataType="{x:Type vm:PropertyVM}">
+            <local:PropertyView/>
+        </DataTemplate>
+        <DataTemplate x:Key="DataContainerProps" DataType="{x:Type vm:DataContainerVM}">
+            <local:DataContainerView/>
+        </DataTemplate>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <local:TreeNavigationView Grid.Column="0"/>
-        <local:PropertyView Grid.Column="1"/>
+        <ContentControl Grid.Column="1" Content="{Binding }">
+            <ContentControl.Style>
+                <Style TargetType="{x:Type ContentControl}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource ProdactProps}" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SwitchView, UpdateSourceTrigger=PropertyChanged}" Value="1">
+                            <Setter Property="ContentTemplate" Value="{StaticResource ProdactProps}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SwitchView, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                            <Setter Property="ContentTemplate" Value="{StaticResource DataContainerProps}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ContentControl.Style>
+        </ContentControl>
     </Grid>
 </UserControl>
