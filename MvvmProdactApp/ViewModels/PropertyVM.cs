@@ -24,6 +24,7 @@ namespace MvvmProdactApp.ViewModels
         public ObservableCollection<ECNsection> ECNsections { get; set; }
         public ObservableCollection<LifeCycleState> LifeCycleStates { get; set; }
 
+        public ObservableCollection<ProdactObject> Occurrences { get; set; }
 
         public ProdactObject SelectedItem
         {
@@ -32,6 +33,7 @@ namespace MvvmProdactApp.ViewModels
             {
                 selectedItem = value;
                 RaisePropertyChangedEvent("SelectedItem");
+                GetOccurrences(selectedItem);
             }
         }
         public Visibility PropsVisible
@@ -116,6 +118,16 @@ namespace MvvmProdactApp.ViewModels
 
             ECNsections = new ObservableCollection<ECNsection>();
             AppService.StaticStoredObjs.ECNsections.ToList().ForEach(e => ECNsections.Add(e));
+
+            Occurrences = new ObservableCollection<ProdactObject>();
+        }
+
+        private void GetOccurrences(ProdactObject selectedItem)
+        {
+            Occurrences.Clear();
+            var Structures = AppService.StaticStoredObjs.ObjStructures.ToList().Where(e => e.LinkToObj.ProdactObj == selectedItem);
+            foreach (var str in Structures)
+                Occurrences.Add(str.ProdactObject);
         }
     }
 }

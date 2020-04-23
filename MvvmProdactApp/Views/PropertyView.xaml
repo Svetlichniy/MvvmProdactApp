@@ -1,5 +1,6 @@
 ﻿<UserControl x:Class="MvvmProdactApp.Views.PropertyView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
@@ -13,7 +14,7 @@
         <TabControl TabStripPlacement="Bottom" 
                     Visibility="{Binding PropsVisible, UpdateSourceTrigger=PropertyChanged}">
             <TabItem Header="Properties">
-                <Grid Margin="10" >
+                <Grid Margin="10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100"/>
                         <ColumnDefinition/>
@@ -21,11 +22,12 @@
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
@@ -159,6 +161,33 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
+            </TabItem>
+            <TabItem Header="Occurrence">
+                <ListBox ItemsSource="{Binding Occurrences, UpdateSourceTrigger=PropertyChanged}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding Image}" Height="16"/>
+                                <Image Source="{Binding ECNImage}" Height="16"/>
+                                <TextBlock Text="{Binding NameUI}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </TabItem>
+            <TabItem Header="AssemblyTree">
+                
+                <TreeView ItemsSource="{Binding SelectedItem.Structure}" Style="{DynamicResource MaterialDesignTreeView}">
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding LinkToObj.ProdactObj.Structure, UpdateSourceTrigger=PropertyChanged}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding LinkToObj.ProdactObj.Image}" Height="16"/>
+                                <Image Source="{Binding LinkToObj.ProdactObj.ECNImage}" Height="16"/>
+                                <TextBlock Text="{Binding LinkToObj.ProdactObj.NameUI}"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
             </TabItem>
         </TabControl>
     </Grid>

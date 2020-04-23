@@ -7,6 +7,7 @@ namespace MvvmProdactApp.Models
     {
         public int Id { get; set; }
         public int Position { get; set; }
+        public virtual ProdactObject ProdactObject { get; set; }
 
         public virtual LinkToObject LinkToObj { get; set; }
 
