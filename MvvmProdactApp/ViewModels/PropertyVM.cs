@@ -95,10 +95,25 @@ namespace MvvmProdactApp.ViewModels
             AppService.StaticStoredObjs.SaveChanges();
         }
 
+        public ICommand BuildECN
+        {
+            get { return new ParamCommand(obj => BuildECNview(SelectedItem.Structure)); }
+        }
+
+        private void BuildECNview(ObservableCollection<ObjStructure> structure)
+        {
+            var Doc = new ECNbuilder(structure);
+            Doc.BuildECN();
+        }
 
         public PropertyVM()
         {
+            Occurrences = new ObservableCollection<ProdactObject>();
+
             AppService.PropertyVM = this;
+            var TreeVM = AppService.TreeNavigationVM;
+            if (TreeVM != null)
+                SelectedItem = TreeVM.SelectedTreeItem as ProdactObject;
 
             Typies = new ObservableCollection<string>() { "DataContainer", "ProdactObject" };
             UpdateProperties();
@@ -118,8 +133,6 @@ namespace MvvmProdactApp.ViewModels
 
             ECNsections = new ObservableCollection<ECNsection>();
             AppService.StaticStoredObjs.ECNsections.ToList().ForEach(e => ECNsections.Add(e));
-
-            Occurrences = new ObservableCollection<ProdactObject>();
         }
 
         private void GetOccurrences(ProdactObject selectedItem)

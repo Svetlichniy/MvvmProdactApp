@@ -3,14 +3,38 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MvvmProdactApp.Views"
+             xmlns:local="clr-namespace:MvvmProdactApp.ViewModels"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance Type={x:Type local:DataContainerVM}}"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TabControl TabStripPlacement="Bottom" Background="#FFEEFBEE">
+        <TabControl TabStripPlacement="Bottom" Background="#FFFBFAEE">
             <TabItem Header="Properties">
                 <Grid Margin="10">
-                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Name" Grid.Column="0" Grid.Row="0"/>
+                    <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding SelectedContainer.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Chart">
+                <Grid Margin="10">
+                    <lvc:PieChart LegendLocation="Right" Series="{Binding Series}">
+                        <lvc:PieChart.Resources>
+                            <Style TargetType="lvc:PieSeries" BasedOn="{StaticResource SeriesStyle}">
+                                <Setter Property="LabelPosition" Value="InsideSlice"/>
+                                <Setter Property="DataLabels" Value="True"/>
+                            </Style>
+                        </lvc:PieChart.Resources>
+                    </lvc:PieChart>
+
                 </Grid>
             </TabItem>
         </TabControl>

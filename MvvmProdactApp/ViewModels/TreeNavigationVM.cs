@@ -16,11 +16,13 @@ namespace MvvmProdactApp.ViewModels
     {
         public ObservableCollection<HierarchicalObject> Items { get; set; }
         public StoredObjects StoredObjs { get; set; }
+        public HierarchicalObject SelectedTreeItem { get; set; }
         public TreeNavigationVM()
         {
             Items = new ObservableCollection<HierarchicalObject>();
             StoredObjs = new StoredObjects();
             AppService.StaticStoredObjs = StoredObjs;
+            AppService.TreeNavigationVM = this;
             //InitObjects();
             StartUp();
         }
@@ -75,16 +77,16 @@ namespace MvvmProdactApp.ViewModels
             {
                 return new ParamCommand(obj => 
                 {
-                    var selectedItem = obj as HierarchicalObject;
-                    if (selectedItem.Discriminator.Equals("ProdactObject"))
+                    SelectedTreeItem = obj as HierarchicalObject;
+                    if (SelectedTreeItem.Discriminator.Equals("ProdactObject"))
                     {
                         AppService.ProdactVM.SwitchView = 1;
-                        AppService.PropertyVM.SelectedItem = obj as ProdactObject;
+                        AppService.PropertyVM.SelectedItem = SelectedTreeItem as ProdactObject;
                     }
                     else
                     {
                         AppService.ProdactVM.SwitchView = 0;
-                        AppService.DataContainerVM.SelectedContainer = selectedItem as DataContainer;
+                        AppService.DataContainerVM.SelectedContainer = SelectedTreeItem as DataContainer;
                     }
                 });
             }

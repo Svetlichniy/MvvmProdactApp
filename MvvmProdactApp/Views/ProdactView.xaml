@@ -17,10 +17,11 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="350"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <local:TreeNavigationView Grid.Column="0"/>
+        <local:TreeNavigationView Grid.Column="0" Margin="0,0,3,0"/>
+        <GridSplitter Width="3" Background="{StaticResource PrimaryHueLightBrush}" Style="{StaticResource MaterialDesignGridSplitter}"/>
         <ContentControl Grid.Column="1" Content="{Binding }">
             <ContentControl.Style>
                 <Style TargetType="{x:Type ContentControl}">

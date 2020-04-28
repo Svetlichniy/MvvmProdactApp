@@ -7,120 +7,131 @@
              xmlns:local="clr-namespace:MvvmProdactApp.Views"
              xmlns:VM="clr-namespace:MvvmProdactApp.ViewModels" 
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance Type={x:Type VM:PropertyVM}}"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TabControl TabStripPlacement="Bottom" 
-                    Visibility="{Binding PropsVisible, UpdateSourceTrigger=PropertyChanged}" Background="#FFFFFBEC">
+        <dragablz:TabablzControl
+                    Visibility="{Binding PropsVisible, UpdateSourceTrigger=PropertyChanged}">
+            <dragablz:TabablzControl.InterTabController>
+                <dragablz:InterTabController/>
+            </dragablz:TabablzControl.InterTabController>
             <TabItem Header="Properties">
-                <Grid Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="100"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Grid.Resources>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                        </Style>
-                    </Grid.Resources>
-                    <Button Command="{Binding Save}" Grid.Row="0" Grid.Column="0">Save</Button>
-                    <TextBlock Text="Name" Grid.Column="0" Grid.Row="01"/>
-                    <TextBox Text="{Binding SelectedItem.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"/>
-                    <TextBlock 
+                <Grid>
+                    <Rectangle Fill="{StaticResource MaterialDesignLightBackground}" RadiusY="10" RadiusX="10" >
+                        <Rectangle.Effect>
+                            <DropShadowEffect BlurRadius="20" Color="#FFDEDEDE" RenderingBias="Quality" ShadowDepth="1"/>
+                        </Rectangle.Effect>
+                    </Rectangle>
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="110"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.Resources>
+                            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource MaterialDesignSubtitle1TextBlock}">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Button Command="{Binding Save}" Grid.Row="0" Grid.Column="0">Save</Button>
+                        <TextBlock Text="Name" Grid.Column="0" Grid.Row="01"/>
+                        <TextBox Text="{Binding SelectedItem.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1"/>
+                        <TextBlock 
                             Text="Designation" 
                             Grid.Column="0" Grid.Row="2"
                             Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBox 
+                        <TextBox 
                             Text="{Binding SelectedItem.Props.Designation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2"
                             Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <TextBlock 
+                        <TextBlock 
                             Text="Litera" 
                             Grid.Column="0" Grid.Row="3"
                             Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}"/>
-                    <ComboBox 
+                        <ComboBox 
                             ItemsSource="{Binding Literas, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                             SelectedItem="{Binding SelectedItem.Props.Litera, Mode=TwoWay}"
                             Grid.Column="1" 
                             Grid.ColumnSpan="2" Grid.Row="3"
                             Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding Image}" Height="16"/>
-                                    <TextBlock Text="{Binding Name}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <TextBlock 
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="{Binding Image}" Height="16"/>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <TextBlock 
                             Text="ClassObj" 
                             Grid.Column="0" Grid.Row="4"
                             Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}"/>
-                    <ComboBox 
+                        <ComboBox 
                             ItemsSource="{Binding ProdactClasses, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                             SelectedItem="{Binding SelectedItem.Props.Class, Mode=TwoWay}"
                             Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4"
                             Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding Image}" Height="16"/>
-                                    <TextBlock Text="{Binding Name}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <TextBlock 
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="{Binding Image}" Height="16"/>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <TextBlock 
                             Text="ECNsection" 
                             Grid.Column="0" Grid.Row="5"
                             Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}"/>
-                    <ComboBox 
+                        <ComboBox 
                             ItemsSource="{Binding ECNsections, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                             SelectedItem="{Binding SelectedItem.Props.Section, Mode=TwoWay}"
                             Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5"
                             Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding Image}" Height="16"/>
-                                    <TextBlock Text="{Binding Name}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <TextBlock 
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="{Binding Image}" Height="16"/>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <TextBlock 
                             Text="LifeCycleState" 
                             Grid.Column="0" Grid.Row="6"
                             Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}"/>
-                    <ComboBox 
+                        <ComboBox 
                             ItemsSource="{Binding LifeCycleStates, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                             SelectedItem="{Binding SelectedItem.Props.LCstate, Mode=TwoWay}"
                             Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6"
                             Visibility="{Binding FieldVisible, UpdateSourceTrigger=PropertyChanged}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Image Source="{Binding Image}" Height="16"/>
-                                    <TextBlock Text="{Binding Name}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="{Binding Image}" Height="16"/>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </Grid>
                 </Grid>
             </TabItem>
             <TabItem Header="Structure">
@@ -130,15 +141,24 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <StackPanel Orientation="Horizontal">
-                        <Button Margin="2" Command="{Binding AddStructure}">Add</Button>
-                        <Button Margin="2" 
-                                Command="{Binding RemoveStructure}"
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignRaisedLightButton}">
+                                <Setter Property="Margin" Value="5"/>
+                            </Style>
+                        </StackPanel.Resources>
+                        <Button Command="{Binding AddStructure}">Add</Button>
+                        <Button Command="{Binding RemoveStructure}"
                                 CommandParameter="{Binding ElementName=structure, Path=SelectedItem}">Remove</Button>
+                        <Button Command="{Binding BuildECN}">ECNview</Button>
                     </StackPanel>
                     <DataGrid x:Name="structure"
                               ItemsSource="{Binding SelectedItem.Structure}" 
                               AutoGenerateColumns="False" 
-                              CanUserAddRows="False" Grid.Row="1">
+                              CanUserAddRows="False"
+                              Grid.Row="1">
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignFlatMidBgButton}"/>
+                        </DataGrid.Resources>
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Position" Binding="{Binding Position}"/>
                             <DataGridTemplateColumn Header="Prodact" IsReadOnly="True">
@@ -162,33 +182,75 @@
                     </DataGrid>
                 </Grid>
             </TabItem>
-            <TabItem Header="Occurrence">
-                <ListBox ItemsSource="{Binding Occurrences, UpdateSourceTrigger=PropertyChanged}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="{Binding Image}" Height="16"/>
-                                <Image Source="{Binding ECNImage}" Height="16"/>
-                                <TextBlock Text="{Binding NameUI}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+            <TabItem Header="Addictions">
+                <Grid>
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignSubtitle2TextBlock}">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Margin="5" Grid.Column="0">
+                        <Border Background="{StaticResource PrimaryHueLightBrush}" VerticalAlignment="Stretch" CornerRadius="12">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <TextBlock
+                               Grid.Row="0" 
+                               Text="Occurrence"/>
+                                <ListBox Grid.Row="1" 
+                                         Margin="0,0,0,30"
+                                         ItemsSource="{Binding Occurrences, UpdateSourceTrigger=PropertyChanged}" 
+                                         Background="{StaticResource MaterialDesignLightBackground}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="{Binding Image}" Height="16"/>
+                                                <Image Source="{Binding ECNImage}" Height="16"/>
+                                                <TextBlock Text="{Binding NameUI}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    <GridSplitter Width="3" Background="{StaticResource PrimaryHueLightBrush}"/>
+                    <Grid Margin="2,5,5,5" Grid.Column="1">
+                        <Border Background="{StaticResource PrimaryHueLightBrush}" VerticalAlignment="Stretch" CornerRadius="12">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock 
+                                   Grid.Row="0" 
+                                   Text="AssemblyTree"/>
+                            <TreeView Grid.Row="1"
+                                   Margin="0,0,0,30"
+                                   ItemsSource="{Binding SelectedItem.Structure}"
+                                   Background="{StaticResource MaterialDesignLightBackground}">
+                                <TreeView.ItemTemplate>
+                                    <HierarchicalDataTemplate ItemsSource="{Binding LinkToObj.ProdactObj.Structure, UpdateSourceTrigger=PropertyChanged}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Source="{Binding LinkToObj.ProdactObj.Image}" Height="16"/>
+                                            <Image Source="{Binding LinkToObj.ProdactObj.ECNImage}" Height="16"/>
+                                            <TextBlock Text="{Binding LinkToObj.ProdactObj.NameUI}"/>
+                                        </StackPanel>
+                                    </HierarchicalDataTemplate>
+                                </TreeView.ItemTemplate>
+                            </TreeView>
+                        </Grid>
+                        </Border>
+                    </Grid>
+                </Grid>
             </TabItem>
-            <TabItem Header="AssemblyTree">
-                
-                <TreeView ItemsSource="{Binding SelectedItem.Structure}" Style="{DynamicResource MaterialDesignTreeView}">
-                    <TreeView.ItemTemplate>
-                        <HierarchicalDataTemplate ItemsSource="{Binding LinkToObj.ProdactObj.Structure, UpdateSourceTrigger=PropertyChanged}">
-                            <StackPanel Orientation="Horizontal">
-                                <Image Source="{Binding LinkToObj.ProdactObj.Image}" Height="16"/>
-                                <Image Source="{Binding LinkToObj.ProdactObj.ECNImage}" Height="16"/>
-                                <TextBlock Text="{Binding LinkToObj.ProdactObj.NameUI}"/>
-                            </StackPanel>
-                        </HierarchicalDataTemplate>
-                    </TreeView.ItemTemplate>
-                </TreeView>
-            </TabItem>
-        </TabControl>
+        </dragablz:TabablzControl>
     </Grid>
 </UserControl>

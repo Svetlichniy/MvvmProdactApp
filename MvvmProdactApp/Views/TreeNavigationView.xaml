@@ -13,20 +13,27 @@
              d:DesignHeight="450" d:DesignWidth="400">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="55"/>
+            <ColumnDefinition Width="40"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <StackPanel Orientation="Vertical" Grid.Column="0">
-            <Button Margin="3" Command="{Binding Create}" 
+        <StackPanel Orientation="Vertical" Grid.Column="0" Background="{StaticResource PrimaryHueLightBrush}">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MaterialDesignIconButton}">
+                    <Setter Property="Width" Value="30"/>
+                    <Setter Property="Height" Value="30"/>
+                    <Setter Property="Margin" Value="5"/>
+                </Style>
+            </StackPanel.Resources>
+            <Button Command="{Binding Create}" 
                     CommandParameter="{Binding SelectedItem, ElementName=tr}" >
-                <Image Source="/Resources/inventory.png"></Image>
+                <Image Height="20" Source="/Resources/inventory.png"></Image>
             </Button>
-            <Button Margin="3" Command="{Binding Delete}" 
+            <Button Command="{Binding Delete}" 
                     CommandParameter="{Binding SelectedItem, ElementName=tr}">
-                <Image Source="/Resources/delete.png" Stretch="Uniform"/>
+                <Image Height="20" Source="/Resources/delete.png" Stretch="Uniform"/>
             </Button>
         </StackPanel>
-        <TreeView x:Name="tr" Grid.Column="1" ItemsSource ="{Binding Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="#FFF0F6FB" Margin="0,0,3,0">
+        <TreeView x:Name="tr" Grid.Column="1" ItemsSource ="{Binding Items, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Background="#FFF0F6FB">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectedItemChanged">
                     <i:InvokeCommandAction Command="{Binding GetItem}"
